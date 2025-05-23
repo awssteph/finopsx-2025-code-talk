@@ -14,9 +14,7 @@ with unblended as (
                 CASE
                     -- Savings Plan savings calculation
                     WHEN "line_item_line_item_type" = 'SavingsPlanCoveredUsage' then "savings_plan_savings_plan_effective_cost" - "line_item_unblended_cost"
-                    -- RI savings calculation
-                    WHEN "line_item_line_item_type" = 'DiscountedUsage' then "reservation_effective_cost" - "pricing_public_on_demand_cost"
-                    ELSE 0
+                                        ELSE 0
                 END
             ),
             2
