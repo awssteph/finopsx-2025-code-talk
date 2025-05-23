@@ -22,8 +22,11 @@ with token_data as (
 		line_item_usage_amount,
 		line_item_unblended_cost,
 		CASE
-			WHEN line_item_usage_type LIKE '%input-token%' THEN 'Input'
-			WHEN line_item_usage_type LIKE '%output-token%' THEN 'Output' ELSE 'Other'
+			WHEN (line_item_usage_type LIKE '%input-token%' OR  line_item_usage_type LIKE '%InputToken%') THEN 'Input' -- both 1,2,3P
+
+			WHEN (line_item_usage_type LIKE '%output-token%' OR  line_item_usage_type LIKE '%OutToken%') THEN 'Input' -- both 1,2,3P
+			ELSE 'Other'
+			
 		END AS token_type,
 		resource_tags [ 'user_dept' ] as user_dept,
 		SPLIT(billing_period, '-') [ 2 ] as month
@@ -32,7 +35,7 @@ with token_data as (
 			line_item_product_code like '%Bedrock%'
 			or product [ 'product_name' ] like '%Bedrock%'
 		)
-		AND (line_item_usage_type like '%tokens%')
+		AND (line_item_usage_type like '%token%') --not with the S 
 )
 SELECT DISTINCT CASE
 		when user_dept is not null then user_dept Else 'untagged'
