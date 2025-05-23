@@ -11,8 +11,10 @@ FROM "cid_data_export"."cur2"
 Where (
 		line_item_product_code like '%Bedrock%'
 		or product [ 'product_name' ] like '%Bedrock%'
-	)
+	) AND (line_item_usage_type like '%token%') --not with the S 
+
 --------------------------------
+
 with token_data as (
 	SELECT line_item_resource_id,
 		line_item_usage_type,
