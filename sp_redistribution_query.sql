@@ -20,7 +20,7 @@ with unblended as (
             2
         ) as sum_savings
     FROM "cid_data_export"."cur2"
-    where SPLIT(billing_period, '-') [ 2 ] = '05' and SPLIT(billing_period, '-') [ 1 ] = '2025'
+    where SPLIT(billing_period, '-') [ 2 ] = '04' and SPLIT(billing_period, '-') [ 1 ] = '2025'
     group by 1, 2, 3
 )
 SELECT *,

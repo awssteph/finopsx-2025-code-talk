@@ -34,11 +34,8 @@ with token_data as (
 			or line_item_usage_type LIKE '%Token%'
 		) --not with the S because  Marketplace 'USW2-MP:USW2_InputTokenCount-Units' 
 		)
-	select distinct CASE
-			when user_dept is not null then user_dept else 'untagged'
-		END as tag,
-		month,
-		sum(line_item_unblended_cost) over (partition by user_dept, month) as total_cost, 
-			sum(line_item_usage_amount) over (partition by user_dept, month) as total_usage
-	from token_data
-	where month = '05'
+	select user_dept, sum(line_item_unblended_cost) as total_spend, sum(line_item_usage_amount) as total_usage
+
+from tokens
+where month = '05'
+group by 1
